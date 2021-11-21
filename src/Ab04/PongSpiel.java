@@ -16,6 +16,7 @@ public class PongSpiel {
     }
 
     private void startAufstellung() {
+        spielfeld = new Spielfeld();
         spielfeld.darstellen(ib);
         spielerLinks = new Spieler(spielfeld, 100, 300);
         spielerLinks.schlaeger.darstellenFuellung(ib);
@@ -29,7 +30,16 @@ public class PongSpiel {
             spielfeld.darstellen(ib);
             spielerLinks.schlaeger.darstellenFuellung(ib);
             spielerRechts.schlaeger.darstellenFuellung(ib);
-
+            System.currentTimeMillis();
         }
+    }
+
+    public void tasteGedrueckt(String s) {
+        if(s == "a") spielerLinks.aufwaerts();
+        if(s == "y") spielerLinks.abwaerts();
+        if( s == "UP") spielerRechts.aufwaerts();
+        if(s == "DOWN") spielerRechts.abwaerts();
+        if(s =="s") spielen();
+        if(s== "e"){} //spiel beenden
     }
 }

@@ -51,6 +51,7 @@ public class Rechteck {
     public int mitteInX() {
         return (x+(x+hoehe) / 2);
     }
+
     public void verschiebe(int dx, int dy) {
         x = x+dx;
         y= y+dy;

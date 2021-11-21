@@ -12,10 +12,14 @@ public class Spieler {
     }
 
     public void aufwaerts() {
-
+        if(schlaeger.oben() < spielfeld.getBreite()) {
+            schlaeger.verschiebeNach(schlaeger.oben()+1, schlaeger.unten()-1);
+        }
     }
     public void abwaerts() {
-
+        if(schlaeger.oben() < spielfeld.getBreite()) {
+            schlaeger.verschiebeNach(schlaeger.oben()-1, schlaeger.unten()+1);
+        }
     }
 
     public void erhöhePunkte() {

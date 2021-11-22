@@ -17,7 +17,7 @@ public class Spielfeld {
 
     public void darstellen(Interaktionsbrett ib) {
     spielflaeche.darstellenRahmen(ib);
-    ib.neueLinie(spielflaeche.mitteInX()-1,spielflaeche.oben(), spielflaeche.mitteInX()+1, spielflaeche.unten()-300);
+    ib.neueLinie(spielflaeche.mitteInX()-1,spielflaeche.oben()+600, spielflaeche.mitteInX()+1, spielflaeche.oben());
     }
     public int getHoehe() {
         return hoehe;

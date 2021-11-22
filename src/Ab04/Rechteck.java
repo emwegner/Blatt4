@@ -40,7 +40,7 @@ public class Rechteck {
         return y;
     }
     public int unten() {
-        return y+hoehe;
+        return y-hoehe;
     }
     public int links() {
         return x;
@@ -79,11 +79,5 @@ public class Rechteck {
             return false;
         }
         return true;
-    }
-    public int getX() {
-        return x;
-    }
-    public int getY() {
-        return y;
     }
 }

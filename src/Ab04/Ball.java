@@ -15,7 +15,7 @@ public class Ball {
     }
 
     public void bewegen(int AnzahlFrames) {
-        form.verschiebeNach(form.getX()+bewegungInXProFrame,form.getY()+bewegungInYProFrame);
+        form.verschiebeNach(form.oben()+bewegungInXProFrame,form.oben()+bewegungInYProFrame);
     }
 
     public void umkehrenDerBewegungInX() {

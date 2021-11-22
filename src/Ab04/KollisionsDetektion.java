@@ -14,8 +14,8 @@ public class KollisionsDetektion {
     }
 
     public void checkBeruehrung(Ball ball) {
-        if(ball.getForm().oben() >= spielfeld.getSpielflaeche().oben()) ball.umkehrenDerBewegungInY();
-        if(ball.getForm().unten() >= spielfeld.getSpielflaeche().unten()) ball.umkehrenDerBewegungInY();
+        if(ball.getForm().oben() == spielfeld.getSpielflaeche().oben()) ball.umkehrenDerBewegungInY();
+        if(ball.getForm().unten() == spielfeld.getSpielflaeche().unten()) ball.umkehrenDerBewegungInY();
     }
 
     public void checkBeruehrungMitSchlaeger(Ball ball) {

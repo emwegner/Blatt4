@@ -47,12 +47,16 @@ public class PongSpiel {
             if(pos == Ballposition.DRAUSSEN_LINKS) {
                 spielerRechts.erhöhePunkte();
                 ball = new Ball(4,1,(new Rechteck(spielerLinks.schlaeger.rechts()+250,spielfeld.getHoehe()/2+25,13,13)));
+                Thread.sleep(1000);
             }
             if(pos == Ballposition.DRAUSSEN_RECHTS) {
                 spielerLinks.erhöhePunkte();
                 ball = new Ball(4,1,(new Rechteck(spielerLinks.schlaeger.rechts()+250,spielfeld.getHoehe()/2+25,13,13)));
+                Thread.sleep(1000);
             }
-
+            if(spielerLinks.punkte == 15 || spielerRechts.punkte == 15) {
+                break;
+            }
             Thread.sleep(5);
         }
     }

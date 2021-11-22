@@ -12,11 +12,10 @@ public class Ball {
         this.bewegungInXProFrame = bewegungInXProFrame;
         this.bewegungInYProFrame = bewegungInYProFrame;
         this.form = form;
-        Interaktionsbrett ib = new Interaktionsbrett();
     }
 
     public void bewegen(int AnzahlFrames) {
-        form.verschiebe(AnzahlFrames*(form.mitteInX()+bewegungInXProFrame), AnzahlFrames*(form.mitteInY()+bewegungInYProFrame));
+        form.verschiebeNach(form.getX()+bewegungInXProFrame,form.getY()+bewegungInYProFrame);
     }
 
     public void umkehrenDerBewegungInX() {

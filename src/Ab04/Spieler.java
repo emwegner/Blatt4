@@ -12,13 +12,13 @@ public class Spieler {
     }
 
     public void aufwaerts() {
-        if(schlaeger.oben() < spielfeld.getBreite()) {
-            schlaeger.verschiebeNach(schlaeger.oben()+1, schlaeger.unten()-1);
+        if(schlaeger.oben() < spielfeld.getSpielflaeche().oben()) {
+            schlaeger.verschiebeNach(schlaeger.getX(), schlaeger.getY()+5);
         }
     }
     public void abwaerts() {
-        if(schlaeger.oben() < spielfeld.getBreite()) {
-            schlaeger.verschiebeNach(schlaeger.oben()-1, schlaeger.unten()+1);
+        if(schlaeger.oben() < spielfeld.getSpielflaeche().oben()) {
+            schlaeger.verschiebeNach(schlaeger.getX(), schlaeger.getY()-5);
         }
     }
 

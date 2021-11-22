@@ -4,6 +4,7 @@ import Ab04.util.Interaktionsbrett;
 
 public class PongSpiel {
     private Ball ball;
+    private KollisionsDetektion detektor;
     private Spielfeld spielfeld;
     private Interaktionsbrett ib;
     private Spieler spielerLinks;
@@ -25,6 +26,7 @@ public class PongSpiel {
         spielerRechts.schlaeger.darstellenFuellung(ib);
         ball = new Ball(4,1,(new Rechteck(spielerLinks.schlaeger.rechts()+250,spielfeld.getHoehe()/2+25,13,13)));
         ball.darstellen(ib);
+        detektor = new KollisionsDetektion(spielfeld,spielerLinks,spielerRechts);
     }
 
     public void spielen() throws InterruptedException {
@@ -35,8 +37,22 @@ public class PongSpiel {
             spielfeld.darstellen(ib);
             spielerLinks.schlaeger.darstellenFuellung(ib);
             spielerRechts.schlaeger.darstellenFuellung(ib);
+            ball.darstellen(ib);
             ib.willTasteninfo(spielerRechts);
             ib.willTasteninfo(spielerLinks);
+            ball.bewegen(1);
+            detektor.checkBeruehrung(ball);
+            detektor.checkBeruehrungMitSchlaeger(ball);
+            Ballposition pos = detektor.checkAusserhalbDesSpielfeldes(ball);
+            if(pos == Ballposition.DRAUSSEN_LINKS) {
+                spielerRechts.erhöhePunkte();
+                ball = new Ball(4,1,(new Rechteck(spielerLinks.schlaeger.rechts()+250,spielfeld.getHoehe()/2+25,13,13)));
+            }
+            if(pos == Ballposition.DRAUSSEN_RECHTS) {
+                spielerLinks.erhöhePunkte();
+                ball = new Ball(4,1,(new Rechteck(spielerLinks.schlaeger.rechts()+250,spielfeld.getHoehe()/2+25,13,13)));
+            }
+
             Thread.sleep(5);
         }
     }

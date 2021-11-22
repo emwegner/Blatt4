@@ -3,6 +3,7 @@ package Ab04;
 import Ab04.util.Interaktionsbrett;
 
 public class PongSpiel {
+    private Ball ball;
     private Spielfeld spielfeld;
     private Interaktionsbrett ib;
     private Spieler spielerLinks;
@@ -22,23 +23,29 @@ public class PongSpiel {
         spielerLinks.schlaeger.darstellenFuellung(ib);
         spielerRechts = new Spieler(spielfeld, 900, 300);
         spielerRechts.schlaeger.darstellenFuellung(ib);
+        ball = new Ball(4,1,(new Rechteck(spielerLinks.schlaeger.rechts()+250,spielfeld.getHoehe()/2+25,13,13)));
+        ball.darstellen(ib);
     }
 
-    public void spielen() {
+    public void spielen() throws InterruptedException {
         while (true) {
             ib.abwischen();
+            ib.neuerText(spielfeld.getSpielflaeche().mitteInX()-25,spielfeld.getSpielflaeche().oben()+25,(Integer.toString(spielerLinks.punkte)));
+            ib.neuerText(spielfeld.getSpielflaeche().mitteInX()+15,spielfeld.getSpielflaeche().oben()+25,(Integer.toString(spielerRechts.punkte)));
             spielfeld.darstellen(ib);
             spielerLinks.schlaeger.darstellenFuellung(ib);
             spielerRechts.schlaeger.darstellenFuellung(ib);
-            System.currentTimeMillis();
+            ib.willTasteninfo(spielerRechts);
+            ib.willTasteninfo(spielerLinks);
+            Thread.sleep(5);
         }
     }
 
-    public void tasteGedrueckt(String s) {
+    public void tasteGedrueckt(String s) throws InterruptedException {
         if(s == "a") spielerLinks.aufwaerts();
         if(s == "y") spielerLinks.abwaerts();
-        if( s == "UP") spielerRechts.aufwaerts();
-        if(s == "DOWN") spielerRechts.abwaerts();
+        if( s == "Oben") spielerRechts.aufwaerts();
+        if(s == "Unten") spielerRechts.abwaerts();
         if(s =="s") spielen();
         if(s== "e"){} //spiel beenden
     }

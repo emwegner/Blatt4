@@ -5,10 +5,10 @@ import Ab04.util.Interaktionsbrett;
 import java.awt.*;
 
 public class Spielfeld {
-    private final Dimension Spielfeldgroesse = new Dimension(600,
-            900);
-    private int hoehe = 900;
-    private int breite = 600;
+    private final Dimension Spielfeldgroesse = new Dimension(900,
+            600);
+    private int breite = 900;
+    private int hoehe = 600;
     private Rechteck spielflaeche;
 
     public Spielfeld() {
@@ -24,5 +24,8 @@ public class Spielfeld {
     }
     public int getBreite() {
         return breite;
+    }
+    public Rechteck getSpielflaeche() {
+        return spielflaeche;
     }
 }

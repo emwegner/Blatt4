@@ -14,14 +14,21 @@ public class KollisionsDetektion {
     }
 
     public void checkBeruehrung(Ball ball) {
-        if(ball.getForm().oben() == spielfeld.getSpielflaeche().oben()) ball.umkehrenDerBewegungInY();
-        if(ball.getForm().unten() == spielfeld.getSpielflaeche().unten()) ball.umkehrenDerBewegungInY();
+       if(ball.getForm().oben() < spielfeld.getSpielflaeche().oben()){
+            ball.umkehrenDerBewegungInY();
+        }
+        if(ball.getForm().unten() > spielfeld.getHoehe()+50) {
+            ball.umkehrenDerBewegungInY();
+            ball.umkehrenDerBewegungInX();
+        }
+
+
     }
 
     public void checkBeruehrungMitSchlaeger(Ball ball) {
-        Random rand = new Random();
-        int random = rand.nextInt(10 + 1)+1;
         if(ball.getForm().ueberschneidet(spielerLinks.schlaeger) || ball.getForm().ueberschneidet(spielerRechts.schlaeger)) {
+            Random rand = new Random();
+            int random = rand.nextInt(10 + 1)+1;
             if(random > 5) ball.umkehrenDerBewegungInY();
             if(random < 5) {
                 ball.umkehrenDerBewegungInY();
@@ -30,13 +37,11 @@ public class KollisionsDetektion {
         }
 
     }
-
-    public Ballposition checkAusserhalbDesSpielfeldes(Ball ball) {
-        if (ball.getForm().links() < spielfeld.getSpielflaeche().links())
-            return Ballposition.DRAUSSEN_LINKS;
-        else if (ball.getForm().rechts() > spielfeld.getSpielflaeche().rechts()) {
-            return Ballposition.DRAUSSEN_RECHTS; }
-        return Ballposition.Drinnen;
+    public int checkAusserhalb(Ball ball) {
+        if (ball.getForm().links() < spielfeld.getSpielflaeche().links()) return 1;
+        if (ball.getForm().rechts() > spielfeld.getSpielflaeche().rechts()) return 2;
+        return 0;
     }
+
 
 }

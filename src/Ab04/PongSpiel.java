@@ -9,6 +9,7 @@ public class PongSpiel {
     private Interaktionsbrett ib;
     private Spieler spielerLinks;
     private Spieler spielerRechts;
+    private boolean spielen = false;
     private final int FPMS = 17;
 
     public PongSpiel(Interaktionsbrett ib) {
@@ -24,16 +25,18 @@ public class PongSpiel {
         spielerLinks.schlaeger.darstellenFuellung(ib);
         spielerRechts = new Spieler(spielfeld, 900, 300);
         spielerRechts.schlaeger.darstellenFuellung(ib);
-        ball = new Ball(4,1,(new Rechteck(spielerLinks.schlaeger.rechts()+250,spielfeld.getHoehe()/2+25,13,13)));
+        ball = new Ball(4, 2, (new Rechteck(spielerLinks.schlaeger.rechts() + 250, spielfeld.getHoehe() / 2 + 25, 13, 13)));
         ball.darstellen(ib);
-        detektor = new KollisionsDetektion(spielfeld,spielerLinks,spielerRechts);
+        detektor = new KollisionsDetektion(spielfeld, spielerLinks, spielerRechts);
     }
 
     public void spielen() throws InterruptedException {
+        int tempo = 0;
         while (true) {
+            //  if (spielen) {
             ib.abwischen();
-            ib.neuerText(spielfeld.getSpielflaeche().mitteInX()-25,spielfeld.getSpielflaeche().oben()+25,(Integer.toString(spielerLinks.punkte)));
-            ib.neuerText(spielfeld.getSpielflaeche().mitteInX()+15,spielfeld.getSpielflaeche().oben()+25,(Integer.toString(spielerRechts.punkte)));
+            ib.neuerText(spielfeld.getSpielflaeche().mitteInX() - 25, spielfeld.getSpielflaeche().oben() + 25, (Integer.toString(spielerLinks.punkte)));
+            ib.neuerText(spielfeld.getSpielflaeche().mitteInX() + 15, spielfeld.getSpielflaeche().oben() + 25, (Integer.toString(spielerRechts.punkte)));
             spielfeld.darstellen(ib);
             spielerLinks.schlaeger.darstellenFuellung(ib);
             spielerRechts.schlaeger.darstellenFuellung(ib);
@@ -43,30 +46,53 @@ public class PongSpiel {
             ball.bewegen(1);
             detektor.checkBeruehrung(ball);
             detektor.checkBeruehrungMitSchlaeger(ball);
-            Ballposition pos = detektor.checkAusserhalbDesSpielfeldes(ball);
-            if(pos == Ballposition.DRAUSSEN_LINKS) {
+            int pos = detektor.checkAusserhalb(ball);
+            if (pos == 1) {
                 spielerRechts.erhöhePunkte();
-                ball = new Ball(4,1,(new Rechteck(spielerLinks.schlaeger.rechts()+250,spielfeld.getHoehe()/2+25,13,13)));
+                ball = new Ball(4, 2, (new Rechteck(spielerLinks.schlaeger.rechts() + 250, spielfeld.getHoehe() / 2 + 25, 13, 13)));
                 Thread.sleep(1000);
             }
-            if(pos == Ballposition.DRAUSSEN_RECHTS) {
+            if (pos == 2) {
                 spielerLinks.erhöhePunkte();
-                ball = new Ball(4,1,(new Rechteck(spielerLinks.schlaeger.rechts()+250,spielfeld.getHoehe()/2+25,13,13)));
+                ball = new Ball(4, 2, (new Rechteck(spielerLinks.schlaeger.rechts() + 250, spielfeld.getHoehe() / 2 + 25, 13, 13)));
                 Thread.sleep(1000);
             }
-            if(spielerLinks.punkte == 15 || spielerRechts.punkte == 15) {
-                break;
+
+            if (spielerRechts.punkte == 15) {
+                ib.neuerText(spielfeld.getSpielflaeche().mitteInX() + 300, spielfeld.getSpielflaeche().oben() + 300, "Rechts hat gewonnen!");
             }
-            Thread.sleep(5);
+            if (spielerLinks.punkte == 15) {
+                ib.neuerText(spielfeld.getSpielflaeche().mitteInX() - 300, spielfeld.getSpielflaeche().oben() + 300, "Links hat gewonnen!");
+
+            }
+
+            tempo++;
+            if (tempo % 2000 == 0) ball.erhoeheGeschwindigkeit();
+            Thread.sleep(17);
         }
     }
 
-    public void tasteGedrueckt(String s) throws InterruptedException {
-        if(s == "a") spielerLinks.aufwaerts();
-        if(s == "y") spielerLinks.abwaerts();
-        if( s == "Oben") spielerRechts.aufwaerts();
-        if(s == "Unten") spielerRechts.abwaerts();
-        if(s =="s") spielen();
-        if(s== "e"){} //spiel beenden
+
+    public void tasteGedrueckt(String s) {
+        switch (s) {
+            case "a":
+                spielerLinks.aufwaerts();
+                break;
+            case "y":
+                spielerLinks.abwaerts();
+                break;
+            case "k":
+                spielerRechts.aufwaerts();
+                break;
+            case "m":
+                spielerRechts.abwaerts();
+                break;
+            case "s":
+                spielen = true;
+                break;
+            case "e":
+                spielen = false;
+                break;
+        }
     }
 }

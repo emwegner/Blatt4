@@ -7,10 +7,6 @@ public class Rechteck {
     private int y;
     private int hoehe;
     private int breite;
-    private Punkt R1;
-    private Punkt R2;
-    private Punkt L1;
-    private Punkt L2;
 
     public Rechteck(int x, int y, int hoehe,int breite) {
         this.x = x;
@@ -18,10 +14,6 @@ public class Rechteck {
         this.hoehe = hoehe;
         this.breite = breite;
 
-        R1 = new Punkt(x+breite,y);
-        R2 = new Punkt(x+breite,y+hoehe);
-        L1 = new Punkt(x,y+hoehe);
-        L2 = new Punkt(x,y+hoehe);
     }
 
 
@@ -40,19 +32,13 @@ public class Rechteck {
         return y;
     }
     public int unten() {
-        return y-hoehe;
+        return oben()+breite;
     }
     public int links() {
         return x;
     }
     public int rechts() {
-        return x+breite;
-    }
-    public int getBreite() {
-        return breite;
-    }
-    public int getHoehe() {
-        return hoehe;
+        return x+hoehe;
     }
     public int mitteInY() {
     return (y+(y+breite) / 2);
@@ -70,14 +56,8 @@ public class Rechteck {
         this.y = y;
     }
     public boolean ueberschneidet(Rechteck o) {
-        if (this.R1.getY() < o.L2.getY()
-                || this.L2.getY() > o.R1.getY()) {
-            return false;
-        }
-        if (this.R1.getX() < o.L2.getX()
-                || this.L2.getX() > o.R1.getX()) {
-            return false;
-        }
-        return true;
+        return x < o.x + o.hoehe && x + hoehe > o.x && y < o.y + o.breite && y + breite > o.y;
     }
+
+
 }

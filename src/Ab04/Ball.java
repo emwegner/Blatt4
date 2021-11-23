@@ -15,7 +15,7 @@ public class Ball {
     }
 
     public void bewegen(int AnzahlFrames) {
-        form.verschiebeNach(form.oben()+bewegungInXProFrame,form.oben()+bewegungInYProFrame);
+        form.verschiebeNach((form.oben()+bewegungInXProFrame)*AnzahlFrames,(form.oben()+bewegungInYProFrame)*AnzahlFrames);
     }
 
     public void umkehrenDerBewegungInX() {
@@ -27,6 +27,10 @@ public class Ball {
 
     public Rechteck getForm() {
         return form;
+    }
+    public void erhoeheGeschwindigkeit() {
+        bewegungInXProFrame += 1;
+        bewegungInYProFrame += 1;
     }
 
     public void darstellen(Interaktionsbrett ib) {

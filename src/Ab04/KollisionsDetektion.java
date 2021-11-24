@@ -14,25 +14,22 @@ public class KollisionsDetektion {
     }
 
     public void checkBeruehrung(Ball ball) {
-       if(ball.getForm().oben() < spielfeld.getSpielflaeche().oben()){
+       if(ball.getForm().oben() < spielfeld.getSpielflaeche().oben()
+       || ball.getForm().unten() > spielfeld.getSpielflaeche().unten()){
             ball.umkehrenDerBewegungInY();
         }
-        if(ball.getForm().unten() > spielfeld.getHoehe()+50) {
-            ball.umkehrenDerBewegungInY();
-            ball.umkehrenDerBewegungInX();
-        }
-
-
     }
 
     public void checkBeruehrungMitSchlaeger(Ball ball) {
         if(ball.getForm().ueberschneidet(spielerLinks.schlaeger) || ball.getForm().ueberschneidet(spielerRechts.schlaeger)) {
             Random rand = new Random();
             int random = rand.nextInt(10 + 1)+1;
-            if(random > 5) ball.umkehrenDerBewegungInY();
-            if(random < 5) {
-                ball.umkehrenDerBewegungInY();
+            if(random > 5) {
                 ball.umkehrenDerBewegungInX();
+            }
+            if(random < 5) {
+                ball.umkehrenDerBewegungInX();
+                ball.umkehrenDerBewegungInY();
             }
         }
 

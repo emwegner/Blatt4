@@ -17,7 +17,6 @@ public class Spieler {
         }
 
     }
-
     public void abwaerts() {
         if(schlaeger.unten() < spielfeld.getSpielflaeche().unten()- spielfeld.rand()) {
             schlaeger.verschiebeNach(schlaeger.links(), schlaeger.oben()+5);

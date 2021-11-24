@@ -13,12 +13,12 @@ public class Spielfeld {
     private Rechteck spielflaeche;
 
     public Spielfeld() {
-        spielflaeche = new Rechteck(margin,margin,900,600);
+        spielflaeche = new Rechteck(margin,margin,600,900);
         }
 
     public void darstellen(Interaktionsbrett ib) {
     spielflaeche.darstellenRahmen(ib);
-    ib.neueLinie(spielflaeche.mitteInX()-1,spielflaeche.unten(), spielflaeche.mitteInX()+1, spielflaeche.oben());
+    ib.neueLinie((spielflaeche.mitteInX()+50),spielflaeche.unten(), spielflaeche.mitteInX()+50, spielflaeche.oben());
     }
     public int getHoehe() {
         return hoehe;

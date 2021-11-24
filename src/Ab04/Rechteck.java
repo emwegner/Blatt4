@@ -18,7 +18,7 @@ public class Rechteck {
 
 
     public void darstellenRahmen(Interaktionsbrett ib) {
-        ib.neuesRechteck(x, y, hoehe, breite);
+        ib.neuesRechteck(x, y, breite, hoehe);
     }
 
 
@@ -32,19 +32,19 @@ public class Rechteck {
         return y;
     }
     public int unten() {
-        return oben()+breite;
+        return oben()+hoehe;
     }
     public int links() {
         return x;
     }
     public int rechts() {
-        return x+hoehe;
+        return x+breite;
     }
     public int mitteInY() {
-    return (y+(y+breite) / 2);
+    return (hoehe / 2);
     }
     public int mitteInX() {
-        return (x+(x+hoehe) / 2);
+        return (breite / 2);
     }
 
     public void verschiebe(int dx, int dy) {
@@ -56,7 +56,7 @@ public class Rechteck {
         this.y = y;
     }
     public boolean ueberschneidet(Rechteck o) {
-        return x < o.x + o.hoehe && x + hoehe > o.x && y < o.y + o.breite && y + breite > o.y;
+        return x < o.x + o.breite && x + breite > o.x && y < o.y + o.hoehe && y + hoehe > o.y;
     }
 
 

@@ -9,6 +9,7 @@ public class PongSpiel {
     private Interaktionsbrett ib;
     private Spieler spielerLinks;
     private Spieler spielerRechts;
+    private Spieler user;
     private boolean spielen = false;
     private final int FPMS = 17;
 
@@ -22,53 +23,54 @@ public class PongSpiel {
         spielfeld = new Spielfeld();
         spielfeld.darstellen(ib);
         spielerLinks = new Spieler(spielfeld, 100, 300);
+        user = new Spieler(spielfeld,1000,1000);
         spielerLinks.schlaeger.darstellenFuellung(ib);
         spielerRechts = new Spieler(spielfeld, 900, 300);
         spielerRechts.schlaeger.darstellenFuellung(ib);
-        ball = new Ball(4, 2, (new Rechteck(spielerLinks.schlaeger.rechts() + 250, spielfeld.getHoehe() / 2 + 25, 13, 13)));
+        ball = new Ball(4, 2, (new Rechteck(spielerLinks.schlaeger.rechts() + 230, spielfeld.getHoehe() / 2 + 25, 13, 13)));
         ball.darstellen(ib);
         detektor = new KollisionsDetektion(spielfeld, spielerLinks, spielerRechts);
     }
 
     public void spielen() throws InterruptedException {
-        int tempo = 0;
         while (true) {
-            //  if (spielen) {
-            ib.abwischen();
-            ib.neuerText(spielfeld.getSpielflaeche().mitteInX() - 25, spielfeld.getSpielflaeche().oben() + 25, (Integer.toString(spielerLinks.punkte)));
-            ib.neuerText(spielfeld.getSpielflaeche().mitteInX() + 15, spielfeld.getSpielflaeche().oben() + 25, (Integer.toString(spielerRechts.punkte)));
-            spielfeld.darstellen(ib);
-            spielerLinks.schlaeger.darstellenFuellung(ib);
-            spielerRechts.schlaeger.darstellenFuellung(ib);
-            ball.darstellen(ib);
-            ib.willTasteninfo(spielerRechts);
-            ib.willTasteninfo(spielerLinks);
-            ball.bewegen(1);
-            detektor.checkBeruehrung(ball);
-            detektor.checkBeruehrungMitSchlaeger(ball);
-            int pos = detektor.checkAusserhalb(ball);
-            if (pos == 1) {
-                spielerRechts.erhöhePunkte();
-                ball = new Ball(4, 2, (new Rechteck(spielerLinks.schlaeger.rechts() + 250, spielfeld.getHoehe() / 2 + 25, 13, 13)));
-                Thread.sleep(1000);
-            }
-            if (pos == 2) {
-                spielerLinks.erhöhePunkte();
-                ball = new Ball(4, 2, (new Rechteck(spielerLinks.schlaeger.rechts() + 250, spielfeld.getHoehe() / 2 + 25, 13, 13)));
-                Thread.sleep(1000);
-            }
+            ib.willTasteninfo(user);
+            if (spielen) {
+                ib.abwischen();
+                ib.neuerText(spielfeld.getSpielflaeche().mitteInX()+25, spielfeld.getSpielflaeche().oben() + 25, (Integer.toString(spielerLinks.punkte)));
+                ib.neuerText(spielfeld.getSpielflaeche().mitteInX() + 70, spielfeld.getSpielflaeche().oben() + 25, (Integer.toString(spielerRechts.punkte)));
+                spielfeld.darstellen(ib);
+                spielerLinks.schlaeger.darstellenFuellung(ib);
+                spielerRechts.schlaeger.darstellenFuellung(ib);
+                ball.darstellen(ib);
+                ib.willTasteninfo(spielerRechts);
+                ib.willTasteninfo(spielerLinks);
+                ball.bewegen(1);
+                detektor.checkBeruehrung(ball);
+                detektor.checkBeruehrungMitSchlaeger(ball);
+                int pos = detektor.checkAusserhalb(ball);
+                if (pos == 1) {
+                    spielerRechts.erhöhePunkte();
+                    ball = new Ball(4, 2, (new Rechteck(spielerLinks.schlaeger.rechts() + 230, spielfeld.getHoehe() / 2 + 25, 13, 13)));
+                    Thread.sleep(1000);
+                }
+                if (pos == 2) {
+                    spielerLinks.erhöhePunkte();
+                    ball = new Ball(-4, 2, (new Rechteck(spielerLinks.schlaeger.rechts() + 230, spielfeld.getHoehe() / 2 + 25, 13, 13)));
+                    Thread.sleep(1000);
+                }
 
-            if (spielerRechts.punkte == 15) {
-                ib.neuerText(spielfeld.getSpielflaeche().mitteInX() + 300, spielfeld.getSpielflaeche().oben() + 300, "Rechts hat gewonnen!");
-            }
-            if (spielerLinks.punkte == 15) {
-                ib.neuerText(spielfeld.getSpielflaeche().mitteInX() - 300, spielfeld.getSpielflaeche().oben() + 300, "Links hat gewonnen!");
+                if (spielerRechts.punkte == 15) {
+                    ib.neuerText(spielfeld.getSpielflaeche().mitteInX() + 300, spielfeld.getSpielflaeche().oben() + 300, "Rechts hat gewonnen!");
+                    break;
+                }
+                if (spielerLinks.punkte == 15) {
+                    ib.neuerText(spielfeld.getSpielflaeche().mitteInX() - 300, spielfeld.getSpielflaeche().oben() + 300, "Links hat gewonnen!");
+                    break;
 
+                }
+                Thread.sleep(FPMS);
             }
-
-            tempo++;
-            if (tempo % 2000 == 0) ball.erhoeheGeschwindigkeit();
-            Thread.sleep(17);
         }
     }
 
@@ -95,4 +97,5 @@ public class PongSpiel {
                 break;
         }
     }
+
 }
